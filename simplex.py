@@ -65,7 +65,7 @@ def identity_matrix(matrix, matrix_restrictions, vetor_b, vetor_c):
     matrix_normalizeted_aux = []
 
     for i in range(num_restrictions):
-        # Make the matrix normalized, to apply simples
+        # Make the matrix normalized, to apply simplex
         row_normalized = np.append(matrix_restrictions[i], matrix_identify[i])
         row_normalized = np.append(row_normalized, vetor_b[i])
         matrix_normalizeted_aux.append(row_normalized)
@@ -134,6 +134,9 @@ def search_better(matrix, is_max, start=True):
         matrix = matrix.astype('float')
 
         matrix = np.array(identity_matrix(matrix, matrix[:-1][:, :-1], matrix[:-1][:, -1], matrix[-1]))
+        if is_max == False:
+            aux = matrix[-1:] *-1
+            matrix[-1:] = aux
 
     bigger_value = max(matrix[-1][:])  # get the highest value of last row
     if bigger_value >= 1:
